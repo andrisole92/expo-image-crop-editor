@@ -45,7 +45,9 @@
     "expo-gl": "*",
     "expo-gl-cpp": "*",
     "expo-image-manipulator": "*",
+    "expo-image-picker": "*",
     "react": "*",
+    "react-responsive": "*",
     "react-native": "*"
   },
   "devDependencies": {
