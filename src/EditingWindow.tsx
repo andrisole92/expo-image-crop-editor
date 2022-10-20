@@ -136,6 +136,7 @@ export { EditingWindow };
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: "#000"
   },
   image: {
     flex: 1,
