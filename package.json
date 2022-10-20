@@ -1,5 +1,5 @@
 {
-  "name": "expo-image-editor",
+  "name": "expo-image-crop-editor",
   "version": "1.7.1",
   "description": "",
   "main": "lib/commonjs/index.js",
@@ -26,12 +26,11 @@
     "blur",
     "expo"
   ],
-  "author": "Thomas Coldwell",
-  "license": "MIT",
-  "homepage": "https://github.com/thomas-coldwell/expo-image-editor",
+  "author": "Iliasse Wahbi",
+  "homepage": "https://github.com/IliasseWahbi/expo-image-crop-editor",
   "repository": {
     "type": "git",
-    "url": "https://github.com/thomas-coldwell/expo-image-editor"
+    "url": "https://github.com/IliasseWahbi/expo-image-crop-editor"
   },
   "dependencies": {
     "@miblanchard/react-native-slider": "^1.5.0",

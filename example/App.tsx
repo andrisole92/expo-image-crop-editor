@@ -1,7 +1,7 @@
 import * as React from "react";
 import { StyleSheet, View, Button, Image, Alert } from "react-native";
 import * as ImagePicker from "expo-image-picker";
-import { ImageEditor } from "expo-image-editor";
+import { ImageEditor } from "expo-image-crop-editor";
 import "@expo/match-media";
 import { useMediaQuery } from "react-responsive";
 import { Platform } from "react-native";

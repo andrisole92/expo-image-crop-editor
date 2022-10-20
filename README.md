@@ -12,13 +12,13 @@ Check out the demo on Netlify <a href="https://expo-image-cropping.netlify.app/"
 To get started install the package in your Expo project by running:
 
 ```
-yarn add expo-image-editor
+yarn add expo-image-crop-editor
 ```
 
 or
 
 ```
-npm i expo-image-editor
+npm i expo-image-crop-editor
 ```
 
 ## Usage
@@ -27,7 +27,7 @@ The package exports a single component `ImageEditor` that can be placed anywhere
 
 ```typescript
 // ...
-import { ImageEditor } from "expo-image-editor";
+import { ImageEditor } from "expo-image-crop-editor";
 
 function App() {
   const [imageUri, setImageUri] = useState(undefined);

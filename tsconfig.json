@@ -2,7 +2,7 @@
   "compilerOptions": {
     "baseUrl": "./",
     "paths": {
-      "expo-image-editor": ["./src/index"]
+      "expo-image-crop-editor": ["./src/index"]
     },
     "allowUnreachableCode": false,
     "allowUnusedLabels": false,
