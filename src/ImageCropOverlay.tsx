@@ -7,7 +7,6 @@ import {
 	StyleSheet,
 	TouchableOpacity,
 	View,
-	ViewPropTypes,
 	requireNativeComponent,
 } from 'react-native';
 import {
@@ -128,17 +127,17 @@ const ImageCropOverlay = () => {
 			const { width: initialWidth, height: initialHeight } = cropSize;
 			let position = '';
 			// Figure out where we pressed vertically
-			if (y / initialHeight < 0.333) {
+			if (y / initialHeight < 0.1) {
 				position = position + 'top';
-			} else if (y / initialHeight < 0.667) {
+			} else if (y / initialHeight < 0.9) {
 				position = position + 'middle';
 			} else {
 				position = position + 'bottom';
 			}
 			// Figure out where we pressed horizontally
-			if (x / initialWidth < 0.333) {
+			if (x / initialWidth < 0.1) {
 				position = position + 'left';
-			} else if (x / initialWidth < 0.667) {
+			} else if (x / initialWidth < 0.9) {
 				position = position + 'middle';
 			} else {
 				position = position + 'right';
