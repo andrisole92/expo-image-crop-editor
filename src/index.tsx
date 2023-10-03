@@ -12,7 +12,8 @@ import {
 import { UniversalModal } from 'image-crop/src/UniversalModal';
 import { EditorContext } from 'image-crop/src/contexts/EditorContext';
 import * as React from 'react';
-import { Platform, SafeAreaView, StatusBar, StyleSheet, View } from 'react-native';
+import { StatusBar, StyleSheet } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { RecoilRoot, useRecoilState } from 'recoil';
 
 export type Mode = 'full' | 'crop-only';
