@@ -1,6 +1,6 @@
 import { AdjustmentOperations, Mode, TransformOperations } from 'expo-image-crop-editor';
+import { ImageDimensions } from 'image-crop/src/Store';
 import React from 'react';
-import { ImageDimensions } from '../Store';
 
 type EditorContextType = {
 	throttleBlur: boolean;
@@ -9,7 +9,7 @@ type EditorContextType = {
 	lockAspectRatio: boolean;
 	mode: Mode;
 	onCloseEditor: () => void;
-	onEditingComplete: (result: any) => void;
+	onEditingComplete: (_result: any) => void;
 	allowedTransformOperations?: TransformOperations[];
 	allowedAdjustmentOperations?: AdjustmentOperations[];
 };

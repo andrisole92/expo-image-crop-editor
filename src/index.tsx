@@ -1,15 +1,19 @@
 import * as ImageManipulator from 'expo-image-manipulator';
+import { ControlBar } from 'image-crop/src/ControlBar';
+import { EditingWindow } from 'image-crop/src/EditingWindow';
+import { OperationBar } from 'image-crop/src/OperationBar/OperationBar';
+import { Processing } from 'image-crop/src/Processing';
+import {
+	editingModeState,
+	imageDataState,
+	processingState,
+	readyState,
+} from 'image-crop/src/Store';
+import { UniversalModal } from 'image-crop/src/UniversalModal';
+import { EditorContext } from 'image-crop/src/contexts/EditorContext';
 import * as React from 'react';
 import { Platform, SafeAreaView, StatusBar, StyleSheet, View } from 'react-native';
 import { RecoilRoot, useRecoilState } from 'recoil';
-import { ControlBar } from './ControlBar';
-import { EditingWindow } from './EditingWindow';
-import { OperationBar } from './OperationBar/OperationBar';
-import { Processing } from './Processing';
-import { editingModeState, imageDataState, processingState, readyState } from './Store';
-import { UniversalModal } from './UniversalModal';
-import { EditorContext } from './contexts/EditorContext';
-const noScroll = require('no-scroll');
 
 export type Mode = 'full' | 'crop-only';
 
@@ -57,39 +61,23 @@ function ImageEditorCore(props: ImageEditorProps) {
 			if (props.imageUri) {
 				const enableEditor = () => {
 					setReady(true);
-					// Set no-scroll to on
-					noScroll.on();
 				};
-				// Platform check
-				if (Platform.OS === 'web') {
-					let img = document.createElement('img');
-					img.onload = () => {
-						setImageData({
-							uri: props.imageUri ?? '',
-							height: img.height,
-							width: img.width,
-						});
-						enableEditor();
-					};
-					img.src = props.imageUri;
-				} else {
-					const { width: pickerWidth, height: pickerHeight } =
-						await ImageManipulator.manipulateAsync(props.imageUri, []);
-					setImageData({
-						uri: props.imageUri,
-						width: pickerWidth,
-						height: pickerHeight,
-					});
-					enableEditor();
-				}
+				const { width: pickerWidth, height: pickerHeight } = await ImageManipulator.manipulateAsync(
+					props.imageUri,
+					[],
+				);
+				setImageData({
+					uri: props.imageUri,
+					width: pickerWidth,
+					height: pickerHeight,
+				});
+				enableEditor();
 			}
 		};
 		initialise();
 	}, [props.imageUri]);
 
 	const onCloseEditor = () => {
-		// Set no-scroll to off
-		noScroll.off();
 		props.onCloseEditor();
 	};
 
@@ -137,7 +125,6 @@ function ImageEditorCore(props: ImageEditorProps) {
 }
 
 export function ImageEditorView(props: ImageEditorProps) {
-	//
 	const { mode = 'full' } = props;
 
 	const [ready, setReady] = useRecoilState(readyState);

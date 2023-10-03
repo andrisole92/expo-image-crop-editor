@@ -1,15 +1,15 @@
 import { ExpoWebGLRenderingContext, GLView } from 'expo-gl';
-import * as React from 'react';
-import { Image, StyleSheet, View } from 'react-native';
-import { useRecoilState } from 'recoil';
-import { ImageCropOverlay } from './ImageCropOverlay';
+import { ImageCropOverlay } from 'image-crop/src/ImageCropOverlay';
 import {
 	editingModeState,
 	glContextState,
 	imageBoundsState,
 	imageDataState,
 	imageScaleFactorState,
-} from './Store';
+} from 'image-crop/src/Store';
+import * as React from 'react';
+import { Image, StyleSheet, View } from 'react-native';
+import { useRecoilState } from 'recoil';
 
 type ImageLayout = {
 	height: number;
@@ -43,7 +43,7 @@ function EditingWindow() {
 			const editingWindowAspectRatio = layout.height / layout.width;
 			//
 			const imageAspectRatio = imageData.height / imageData.width;
-			let bounds = { x: 0, y: 0, width: 0, height: 0 };
+			const bounds = { x: 0, y: 0, width: 0, height: 0 };
 			let imageScaleFactor = 1;
 			// Check which is larger
 			if (imageAspectRatio > editingWindowAspectRatio) {

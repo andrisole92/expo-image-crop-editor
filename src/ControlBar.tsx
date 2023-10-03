@@ -1,12 +1,12 @@
+import { editingModeState, imageDataState, processingState } from 'image-crop/src/Store';
+import { IconButton } from 'image-crop/src/components/IconButton';
+import { EditorContext } from 'image-crop/src/contexts/EditorContext';
+import { usePerformCrop } from 'image-crop/src/customHooks/usePerformCrop';
 import _ from 'lodash';
 import * as React from 'react';
 import { useContext, useEffect } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { useRecoilState } from 'recoil';
-import { editingModeState, imageDataState, processingState } from './Store';
-import { IconButton } from './components/IconButton';
-import { EditorContext } from './contexts/EditorContext';
-import { usePerformCrop } from './customHooks/usePerformCrop';
 
 function ControlBar() {
 	//

@@ -1,11 +1,5 @@
 {
 	"compilerOptions": {
-		"baseUrl": ".",
-		"typeRoots": ["./node_modules/@types"],
-		"paths": {
-			"expo-image-crop-editor": ["src/index"],
-			"@imageCrop": ["src/index"]
-		},
 		"allowUnreachableCode": false,
 		"allowUnusedLabels": false,
 		"esModuleInterop": true,
@@ -20,7 +14,18 @@
 		"resolveJsonModule": true,
 		"skipLibCheck": true,
 		"strict": true,
-		"target": "esnext"
+		"target": "esnext",
+		"declaration": false,
+		"emitDecoratorMetadata": true,
+		"experimentalDecorators": true,
+		"sourceMap": true,
+		"checkJs": false,
+		"skipDefaultLibCheck": true,
+		"downlevelIteration": true,
+		"paths": {
+			"expo-image-crop-editor": ["./src/index"],
+			"image-crop/*": ["./*"]
+		}
 	},
 	"exclude": ["./example"]
 }

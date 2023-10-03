@@ -1,3 +1,5 @@
+import { accumulatedPanState, cropSizeState, imageBoundsState } from 'image-crop/src/Store';
+import { EditorContext } from 'image-crop/src/contexts/EditorContext';
 import _ from 'lodash';
 import * as React from 'react';
 import { useContext } from 'react';
@@ -16,8 +18,6 @@ import {
 	State,
 } from 'react-native-gesture-handler';
 import { useRecoilState } from 'recoil';
-import { accumulatedPanState, cropSizeState, imageBoundsState } from './Store';
-import { EditorContext } from './contexts/EditorContext';
 
 const horizontalSections = ['top', 'middle', 'bottom'];
 const verticalSections = ['left', 'middle', 'right'];
@@ -59,7 +59,7 @@ const ImageCropOverlay = () => {
 
 	React.useEffect(() => {
 		// Update the size of the crop window based on the new image bounds
-		let newSize = { width: 0, height: 0 };
+		const newSize = { width: 0, height: 0 };
 		const { width, height } = imageBounds;
 		const imageAspectRatio = width / height;
 		// Then check if the cropping aspect ratio is smaller
@@ -127,17 +127,17 @@ const ImageCropOverlay = () => {
 			const { width: initialWidth, height: initialHeight } = cropSize;
 			let position = '';
 			// Figure out where we pressed vertically
-			if (y / initialHeight < 0.1) {
+			if (y / initialHeight < 0.2) {
 				position = position + 'top';
-			} else if (y / initialHeight < 0.9) {
+			} else if (y / initialHeight < 0.8) {
 				position = position + 'middle';
 			} else {
 				position = position + 'bottom';
 			}
 			// Figure out where we pressed horizontally
-			if (x / initialWidth < 0.1) {
+			if (x / initialWidth < 0.2) {
 				position = position + 'left';
-			} else if (x / initialWidth < 0.9) {
+			} else if (x / initialWidth < 0.8) {
 				position = position + 'middle';
 			} else {
 				position = position + 'right';
@@ -209,7 +209,7 @@ const ImageCropOverlay = () => {
 		// Is the new x pos plus crop width going to exceed the right hand bound
 		else if (accDx + cropSize.width > imageBounds.width + imageBounds.x) {
 			// Then set the x pos so the crop frame touches the right hand edge
-			let limitedXPos = imageBounds.x + imageBounds.width - cropSize.width;
+			const limitedXPos = imageBounds.x + imageBounds.width - cropSize.width;
 			accDx = limitedXPos;
 		} else {
 			// It's somewhere in between - no formatting required
@@ -224,7 +224,7 @@ const ImageCropOverlay = () => {
 		// Is the new y pos plus crop height going to exceed the bottom bound
 		else if (accDy + cropSize.height > imageBounds.height + imageBounds.y) {
 			// Then set the y pos so the crop frame touches the bottom edge
-			let limitedYPos = imageBounds.y + imageBounds.height - cropSize.height;
+			const limitedYPos = imageBounds.y + imageBounds.height - cropSize.height;
 			accDy = limitedYPos;
 		} else {
 			// It's somewhere in between - no formatting required
