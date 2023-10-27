@@ -1,10 +1,17 @@
 import React from 'react';
-import { Platform, Modal as RNModal } from 'react-native';
+import { Modal } from 'react-native';
 
-interface IUniversalModalProps extends React.ComponentProps<typeof RNModal> {
+interface IUniversalModalProps extends React.ComponentProps<typeof Modal> {
 	children: React.ReactNode;
 }
 
 export const UniversalModal = (props: IUniversalModalProps) => {
-	return <RNModal {...props} style={{ paddingTop: 30, margin: 100 }} />;
+	return (
+		<Modal
+			{...props}
+			style={{ paddingTop: 30, margin: 100, backgroundColor: 'red', width: '100%', height: '100%' }}
+		/>
+	);
 };
+
+export default React.memo(UniversalModal);

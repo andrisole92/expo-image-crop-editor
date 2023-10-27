@@ -9,11 +9,10 @@ import {
 	processingState,
 	readyState,
 } from 'image-crop/src/Store';
-import { UniversalModal } from 'image-crop/src/UniversalModal';
+import UniversalModal from 'image-crop/src/UniversalModal';
 import { EditorContext } from 'image-crop/src/contexts/EditorContext';
 import * as React from 'react';
-import { StatusBar, StyleSheet } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { SafeAreaView, StatusBar, StyleSheet } from 'react-native';
 import { RecoilRoot, useRecoilState } from 'recoil';
 
 export type Mode = 'full' | 'crop-only';
@@ -22,10 +21,32 @@ export type TransformOperations = 'crop' | 'rotate';
 export type AdjustmentOperations = 'blur';
 export type EditingOperations = TransformOperations | AdjustmentOperations;
 
+export function ImageEditorView(props: ImageEditorProps) {
+	const { mode = 'full' } = props;
+
+	const [ready] = useRecoilState(readyState);
+	const [processing] = useRecoilState(processingState);
+
+	return (
+		<>
+			{ready ? (
+				<SafeAreaView style={styles.container}>
+					<ControlBar />
+					<EditingWindow />
+					{mode === 'full' && <OperationBar />}
+				</SafeAreaView>
+			) : null}
+			{processing ? <Processing /> : null}
+		</>
+	);
+}
+
+export const ImageEditorViewMemo = React.memo(ImageEditorView);
+
 export interface ImageEditorProps {
 	visible: boolean;
 	onCloseEditor: () => void;
-	imageUri: string | undefined;
+	image?: ImageManipulator.ImageResult;
 	fixedCropAspectRatio?: number;
 	minimumCropDimensions?: {
 		width: number;
@@ -41,7 +62,6 @@ export interface ImageEditorProps {
 }
 
 function ImageEditorCore(props: ImageEditorProps) {
-	//
 	const {
 		mode = 'full',
 		throttleBlur = true,
@@ -59,24 +79,20 @@ function ImageEditorCore(props: ImageEditorProps) {
 	// Initialise the image data when it is set through the props
 	React.useEffect(() => {
 		const initialise = async () => {
-			if (props.imageUri) {
+			if (props.image) {
 				const enableEditor = () => {
 					setReady(true);
 				};
-				const { width: pickerWidth, height: pickerHeight } = await ImageManipulator.manipulateAsync(
-					props.imageUri,
-					[],
-				);
 				setImageData({
-					uri: props.imageUri,
-					width: pickerWidth,
-					height: pickerHeight,
+					uri: props.image?.uri,
+					width: props?.image?.width,
+					height: props?.image?.height,
 				});
 				enableEditor();
 			}
 		};
 		initialise();
-	}, [props.imageUri]);
+	}, [props.image]);
 
 	const onCloseEditor = () => {
 		props.onCloseEditor();
@@ -114,10 +130,12 @@ function ImageEditorCore(props: ImageEditorProps) {
 					<ImageEditorView {...props} />
 				) : (
 					<UniversalModal
+						animationType='slide'
 						visible={props.visible}
 						presentationStyle='fullScreen'
-						statusBarTranslucent>
-						<ImageEditorView {...props} />
+						statusBarTranslucent
+						transparent>
+						<ImageEditorViewMemo {...props} />
 					</UniversalModal>
 				)}
 			</SafeAreaView>
@@ -125,39 +143,30 @@ function ImageEditorCore(props: ImageEditorProps) {
 	);
 }
 
-export function ImageEditorView(props: ImageEditorProps) {
-	const { mode = 'full' } = props;
-
-	const [ready, setReady] = useRecoilState(readyState);
-	const [processing, setProcessing] = useRecoilState(processingState);
-
-	return (
-		<>
-			{ready ? (
-				<SafeAreaView style={styles.container}>
-					<ControlBar />
-					<EditingWindow />
-					{mode === 'full' && <OperationBar />}
-				</SafeAreaView>
-			) : null}
-			{processing ? <Processing /> : null}
-		</>
-	);
-}
+const ImageEditorCoreMemo = React.memo(ImageEditorCore);
 
 export function ImageEditor(props: ImageEditorProps) {
 	return (
 		<RecoilRoot>
-			<SafeAreaView>
-				<ImageEditorCore {...props} />
+			<SafeAreaView
+				style={{
+					position: 'absolute',
+					top: 0,
+					left: 0,
+					width: '100%',
+					height: '100%',
+				}}>
+				<ImageEditorCoreMemo {...props} />
 			</SafeAreaView>
 		</RecoilRoot>
 	);
 }
 
+export default React.memo(ImageEditor);
+
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		backgroundColor: '#222',
+		backgroundColor: '#000',
 	},
 });
