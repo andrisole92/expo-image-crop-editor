@@ -132,7 +132,6 @@ function ImageEditorCore(props: ImageEditorProps) {
 					<UniversalModal
 						animationType='slide'
 						visible={props.visible}
-						presentationStyle='fullScreen'
 						statusBarTranslucent
 						transparent>
 						<ImageEditorViewMemo {...props} />
